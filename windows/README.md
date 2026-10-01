@@ -4,6 +4,8 @@
 
 ## 使用
 
+安装包与便携 ZIP 下载：[Windows Releases](https://github.com/Ameri1021/YunX-win/releases)。本 Windows 衍生版本源码：[Ameri1021/YunX-win](https://github.com/Ameri1021/YunX-win)。
+
 1. 安装 `YunX-Windows-1.0.2-x64.exe`，或解压便携包后打开 `YunX.exe`。
 2. 在「网盘账号」完成官方网站登录。登录完成后应用自动校验并保存；也可以手动导入自己的 Cookie / Token。
 3. 迅雷另外支持账号密码与短信验证码登录。平台要求设备验证时，需要在官方页面完成验证。
@@ -74,3 +76,5 @@ npm run dist:portable
 由 **Ameri1021** 提出需求、整理并存档，借助 **OpenAI GPT-6.1-sol** 完成 Windows 移植、修复和验证。2026-10-01 归档的 1.0.2 版本主要包含官方网页登录、Windows 加密存储、主进程网络通道与固定分片下载的修复。平台接口迁移自原项目，原作者及其他贡献者的版权仍归各自权利人所有。
 
 源代码存档不包含个人账号数据、认证备份、签名私钥、开发依赖、运行时和构建结果。若另行分发 EXE，应按 AGPL-3.0 提供与该成品对应的完整源码及必要构建脚本，并保留第三方组件的许可证。
+
+安装包与便携包随附 `LICENSE.txt`、本文档、`THIRD-PARTY-NOTICES.md` 和 `THIRD-PARTY-LICENSES/`；Electron、Chromium 与 Java 运行时另保留其自带许可证。第三方组件及其源码地址详见 [第三方组件说明](THIRD-PARTY-NOTICES.md)。

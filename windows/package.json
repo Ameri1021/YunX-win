@@ -52,6 +52,14 @@
       {
         "from": "README.md",
         "to": "README.md"
+      },
+      {
+        "from": "THIRD-PARTY-NOTICES.md",
+        "to": "THIRD-PARTY-NOTICES.md"
+      },
+      {
+        "from": "THIRD-PARTY-LICENSES",
+        "to": "THIRD-PARTY-LICENSES"
       }
     ],
     "asar": true,

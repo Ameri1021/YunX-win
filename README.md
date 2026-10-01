@@ -1,6 +1,10 @@
-# 云析 · YunX Windows 源码存档
+# 云析 · YunX Windows
 
 Windows 10/11 x64 桌面版，支持夸克、UC、迅雷、139、123 云盘和 GitHub。
+
+## 下载
+
+安装包和便携 ZIP 见 [Windows Releases](https://github.com/Ameri1021/YunX-win/releases)。安装版运行 EXE 按提示安装；便携版解压 ZIP 后打开 `YunX.exe`。成品自带运行时，无需另装 Java 或 Node.js。
 
 ## 来源与署名
 
@@ -16,7 +20,7 @@ Windows 10/11 x64 桌面版，支持夸克、UC、迅雷、139、123 云盘和 G
 - `.github/workflows/windows-ci.yml`：Windows 验证与打包流程。
 - `LICENSE`：原 AGPL-3.0 许可证全文。
 
-本次仅归档 Windows 源码、许可证及来源说明。原 Android 参考工程、原 Git 历史、个人账号数据、认证备份、签名私钥、开发依赖、运行时及构建结果未收录；原工程在本地完整保留。
+Git 仓库归档 Windows 源码、许可证及来源说明。原 Android 参考工程、原 Git 历史、个人账号数据、认证备份、签名私钥、开发依赖、运行时及构建结果不提交到 Git；安装包和便携包通过 Releases 单独分发。原工程在本地完整保留。
 
 运行、开发和打包方法见 [Windows 使用说明](windows/README.md)。归档前的检查结果见 [隐私检查记录](windows/ARCHIVE-CHECK.md)。
 
