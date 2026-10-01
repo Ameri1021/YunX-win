@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>云析 YunX</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">云</div><div><strong>云析</strong><span>YunX for Windows</span></div></div>
+    <div class="nav-label">工作空间</div>
+    <nav>
+      <button class="nav-item active" data-page="resolve"><span data-icon="link"></span>分享解析</button>
+      <button class="nav-item" data-page="downloads"><span data-icon="download"></span>下载管理<span class="nav-count" id="download-count">0</span></button>
+      <button class="nav-item" data-page="accounts"><span data-icon="cloud"></span>网盘账号</button>
+      <button class="nav-item" data-page="bookmarks"><span data-icon="bookmark"></span>我的收藏</button>
+    </nav>
+    <div class="sidebar-bottom"><button class="nav-item" data-page="settings"><span data-icon="settings"></span>设置</button><div class="sidebar-note"><span class="status-dot"></span>本地运行 · 免费开源</div></div>
+  </aside>
+  <main>
+    <header class="page-header"><div><div class="eyebrow">YUNX / WORKSPACE</div><h1 id="page-title">分享解析</h1><p id="page-description">从分享链接，到你的本地文件。</p></div><div class="header-tag">WINDOWS DESKTOP <span id="version">1.0.0</span></div></header>
+    <section class="page" id="page-resolve">
+      <div class="card resolve-card"><div class="card-heading"><div class="heading-icon" data-icon="link"></div><div><h2>粘贴一个链接，开始探索</h2><p>支持网盘分享文案、GitHub 仓库与文件直链</p></div><span class="subtle-badge">6 个平台</span></div>
+        <textarea id="share-text" placeholder="在这里粘贴分享链接，或者带有提取码的完整文案…" spellcheck="false"></textarea>
+        <div class="resolve-actions"><div class="password-field"><span data-icon="key"></span><input id="share-password" placeholder="提取码（选填）" maxlength="20"></div><button class="button secondary" id="paste-link"><span data-icon="clipboard"></span>粘贴</button><button class="button secondary icon-button" id="save-bookmark" title="收藏此链接"><span data-icon="bookmark"></span></button><button class="button primary" id="resolve-button">解析链接<span data-icon="arrow"></span></button></div>
+      </div>
+      <div class="supported"><span>支持的平台</span><div id="platform-chips"></div></div>
+      <div class="card files-card" id="file-results" hidden><div class="file-toolbar"><div><h2 id="file-title">分享文件</h2><div class="breadcrumb" id="breadcrumb"></div></div><div class="toolbar-actions"><button class="button secondary small" id="file-back">返回上一级</button><button class="button secondary small" id="file-refresh">刷新</button><button class="button primary small" id="batch-download">下载选中项</button></div></div><div class="table-scroll"><table><thead><tr><th class="check-cell"><input type="checkbox" id="select-all"></th><th>文件名称</th><th class="size-cell">大小</th><th>更新 / 版本</th><th class="action-cell">操作</th></tr></thead><tbody id="file-list"></tbody></table></div><div class="table-footer"><span id="file-summary"></span><span>下载到 <span id="current-download-dir"></span></span></div></div>
+      <div class="empty-state" id="resolve-empty"><div class="empty-illustration"><span data-icon="folder"></span><span class="floating-cloud" data-icon="cloud"></span></div><h3>你的文件，触手可及</h3><p>解析链接后，在这里浏览文件并开始下载。<br>需要登录的平台，可以先前往「网盘账号」。</p></div>
+    </section>
+    <section class="page" id="page-downloads" hidden><div class="stats-grid"><div class="stat-card"><span>正在下载</span><strong id="stat-active">0</strong><small>个任务</small></div><div class="stat-card"><span>当前速度</span><strong id="stat-speed">0 B/s</strong><small>总下载速度</small></div><div class="stat-card"><span>已完成</span><strong id="stat-complete">0</strong><small>个文件</small></div></div><div class="section-toolbar"><div class="filters" id="download-filters"><button class="active" data-filter="all">全部</button><button data-filter="active">进行中</button><button data-filter="completed">已完成</button></div><div class="toolbar-actions"><button class="button secondary small" id="pause-all">全部暂停</button><button class="button secondary small" id="resume-all">全部开始</button><button class="button primary small" id="add-download"><span data-icon="plus"></span>添加下载</button></div></div><div id="task-list"></div></section>
+    <section class="page" id="page-accounts" hidden><div class="info-banner"><span data-icon="shield"></span><div><strong>登录信息由 Windows 保护</strong><p>在各平台官方网站登录，完成后自动保存。也可以手动导入已有登录信息。</p></div></div><div class="account-grid" id="account-list"></div></section>
+    <section class="page" id="page-bookmarks" hidden><div id="bookmark-list"></div></section>
+    <section class="page" id="page-settings" hidden>
+      <div class="card settings-card"><h2>下载偏好</h2><div class="setting-row"><div><strong>下载位置</strong><p id="setting-dir"></p></div><button class="button secondary small" id="choose-directory">选择文件夹</button></div><div class="setting-row"><div><strong>每个文件的下载线程</strong><p>迅雷最多使用 8 个线程；较高并发可能触发平台限速。</p></div><select id="setting-threads"><option>1</option><option>4</option><option>8</option><option>16</option><option>32</option></select></div><div class="setting-row"><div><strong>同时下载任务数</strong><p>其余任务按顺序排队等待。</p></div><select id="setting-concurrency"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div><div class="setting-row"><div><strong>全局限速</strong><p>单位 MB/s，填写 0 表示不限速。</p></div><input type="number" id="setting-speed" min="0" max="1024" step="0.5" value="0"></div></div>
+      <div class="card settings-card"><h2>外观与网络</h2><div class="setting-row"><div><strong>主题</strong><p>选择适合你的工作环境。</p></div><select id="setting-theme"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div><div class="setting-row"><div><strong>GitHub 下载加速前缀</strong><p>留空使用官方直连；例如 https://你的镜像站/</p></div><input id="setting-mirror" placeholder="https://" class="wide-input"></div><div class="setting-row"><div><strong>HTTP 代理</strong><p>留空使用系统网络设置，修改后对新的网络请求生效。</p></div><div class="proxy-input"><input id="setting-proxy-host" placeholder="127.0.0.1"><input id="setting-proxy-port" type="number" min="0" max="65535" placeholder="端口"></div></div></div>
+      <div class="card settings-card"><h2>认证备份</h2><div class="setting-row"><div><strong>导出或恢复登录信息</strong><p>使用至少 12 个字符的口令加密。请妥善保管备份和口令。</p></div><div class="toolbar-actions"><button class="button secondary small" id="import-auth">导入备份</button><button class="button secondary small" id="export-auth">导出备份</button></div></div></div><div class="settings-footer"><span>云析 · 免费开源 · AGPL-3.0</span><button class="button primary" id="save-settings">保存设置</button></div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="modal"><div class="modal-heading"><h2 id="modal-title"></h2><button id="modal-close" class="icon-button" aria-label="关闭">×</button></div><div id="modal-body"></div><div id="modal-actions" class="modal-actions"></div></dialog>
+  <script src="app.js"></script>
+</body>
+</html>

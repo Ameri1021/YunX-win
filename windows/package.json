@@ -1,0 +1,74 @@
+{
+  "name": "yunx-windows",
+  "version": "1.0.2",
+  "private": true,
+  "description": "云析 Windows 桌面版",
+  "author": "YunX contributors",
+  "license": "AGPL-3.0-only",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "build:core": "node scripts/build-core.cjs",
+    "start": "electron .",
+    "dev": "npm run build:core && electron .",
+    "test": "node --test tests/*.test.cjs",
+    "test:core": "node scripts/build-core.cjs --test",
+    "test:smoke": "electron . --smoke-test",
+    "dist": "npm run build:core && electron-builder --win nsis --x64",
+    "dist:portable": "npm run build:core && electron-builder --win zip --x64"
+  },
+  "devDependencies": {
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.yunx.windows",
+    "productName": "YunX",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**",
+      "ui/**",
+      "scripts/smoke.cjs",
+      "package.json",
+      "LICENSE"
+    ],
+    "electronDist": "node_modules/electron/dist",
+    "extraResources": [
+      {
+        "from": "resources/core",
+        "to": "core"
+      },
+      {
+        "from": "resources/icon.png",
+        "to": "icon.png"
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": "LICENSE",
+        "to": "LICENSE.txt"
+      },
+      {
+        "from": "README.md",
+        "to": "README.md"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "YunX-Windows-${version}-${arch}.${ext}",
+      "icon": "resources/icon.ico",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "云析 YunX"
+    }
+  }
+}

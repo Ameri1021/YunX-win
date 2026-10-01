@@ -1,0 +1,43 @@
+name: Windows CI
+on:
+  push:
+    branches: [master]
+    paths: ['windows/**', '.github/workflows/windows-ci.yml']
+  pull_request:
+    paths: ['windows/**', '.github/workflows/windows-ci.yml']
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: windows/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build:core
+      - run: npm run test:smoke
+      - run: npm exec electron-builder -- --win nsis zip --x64
+      - name: 验证打包后的 Windows 应用
+        shell: pwsh
+        run: |
+          $taskProcess = Start-Process -FilePath "$PWD/dist/win-unpacked/YunX.exe" -ArgumentList '--smoke-test' -WindowStyle Hidden -Wait -PassThru -RedirectStandardOutput "$PWD/artifacts/packaged.log" -RedirectStandardError "$PWD/artifacts/packaged-errors.log"
+          Get-Content -LiteralPath "$PWD/artifacts/packaged.log"
+          Get-Content -LiteralPath "$PWD/artifacts/packaged-errors.log"
+          if ($taskProcess.ExitCode -ne 0) { throw "打包后的应用检查失败：$($taskProcess.ExitCode)" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YunX-Windows
+          path: |
+            windows/dist/*.exe
+            windows/dist/*.zip
+          if-no-files-found: error
